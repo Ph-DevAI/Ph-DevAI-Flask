@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Site web de Prince Hilquia Kapseu — projets, passion et innovation dans la robotique et le développement web.">
+  <meta name="keywords" content="robotique, développement web, Cameroun, Prince Hilquia, innovation, technologie">
+  <meta name="author" content="Prince Hilquia Kapseu">
+  <meta name="robots" content="index, follow">
+  <!-- Balises Open Graph (Facebook, Instagram, WhatsApp) -->
+  <meta property="og:title" content="Prince Hilquia Kapseu - Createur de l'entreprise KN-PH et des domaines KN et PH, Createur de Ph-DevAI, Innovateur en Robotique & Développement Web, etudiant en physique et entrepreneur">
+  <meta property="og:description" content="Découvrez mes projets, mes idées et ma vision : unir technologie et humanité à travers la robotique et le développement web.">
+  <meta property="og:image" content=""> <!-- Mets ici l'URL complète d'une image -->
+  <meta property="og:url" content="https://ph-devai.onrender.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+
+  <title>Ph-DevAI — Développement Web & IA</title>
+  <meta name="description" content="Ph-DevAI — Développement web et solutions IA. Sites vitrines, applications intelligentes, design, chatbots et formations." />
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  
+
+
+
+  <!-- Bootstrap & Swiper CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R2PSVLX3PR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-R2PSVLX3PR');
+  </script>
+
+
+
+</head>
+<body>
+
+
+<!-- NAV -->
+<nav id="mainNav" class="navbar transparent">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="d-flex align-items-center gap-3 text-decoration-none" href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='logo.png') }}" class="brand-mark" style="width: 100px; height: 100px;">
+      <div>
+        <div style="font-weight:700">Ph-DevAI</div>
+        <small style="color:var(--muted)">Web & IA Studio</small>
+      </div>
+    </a>
+
+    <div class="d-flex align-items-center">
+      <ul class="nav me-3 d-none d-lg-flex">
+        <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('home') }}">Accueil</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#courses">Formations</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#domains">Domains PH</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#testimonials">Témoignages</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="btn-group me-2" role="group">
+        <button id="lang-fr" class="btn btn-outline-light btn-sm active">PH</button>
+        <button id="lang-en" class="btn btn-outline-light btn-sm">KN</button>
+      </div>
+
+      {% if current_user.is_authenticated %}
+        <a class="btn btn-sm btn-neon me-2" href="{{ url_for('dashboard') }}">Dashboard</a>
+        {% if current_user.is_admin %}
+          <a class="btn btn-sm btn-neon me-2" href="{{ url_for('admin') }}">Admin</a>
+        {% endif %}
+        <a class="btn btn-sm btn-outline-light" href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a class="btn btn-sm btn-neon me-2" href="{{ url_for('login') }}">Login</a>
+        <a class="btn btn-sm btn-outline-light" href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+
+      <!-- mobile menu -->
+      <button class="btn btn-outline-light d-lg-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"><i class="fa fa-bars"></i></button>
+    </div>
+  </div>
+
+  <div class="collapse" id="mobileMenu">
+    <div class="bg-dark p-3">
+      <a class="d-block py-2 text-white" href="#services">Services</a>
+      <a class="d-block py-2 text-white" href="#courses">Formations</a>
+      <a class="d-block py-2 text-white" href="#domains">Domains PH</a>
+      <a class="d-block py-2 text-white" href="#contact">Contact</a>
+      {% if current_user.is_authenticated %}
+        <a class="d-block py-2 text-white" href="{{ url_for('dashboard') }}">Dashboard</a>
+        {% if current_user.is_admin %}
+          <a class="d-block py-2 text-white" href="{{ url_for('admin') }}">Admin</a>
+        {% endif %}
+        <a class="d-block py-2 text-white" href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a class="d-block py-2 text-white" href="{{ url_for('login') }}">Login</a>
+        <a class="d-block py-2 text-white" href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<header id="home" class="parallax-section hero">
+  <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80"></div>
+  <div class="parallax-overlay"></div>
+
+  <div class="parallax-inner container text-center">
+    <!-- Swiper vertical -->
+    <div class="swiper heroSwiper" style="height: 450px;"> <!-- Ajustez hauteur si besoin -->
+      <div class="swiper-wrapper">
+
+        <!-- Slide 1 : Introduction -->
+        <div class="swiper-slide">
+          <span class="badge-ghost mb-3"><img src="{{ url_for('static', filename='logo.png') }}" class="brand-mark" style="width: 100px; height: 100px;"></span>
+          <h1>Solutions logicielles intelligentes pour entreprises modernes</h1>
+          <p class="lead mb-4">Du développement logiciel à l’analyse de données — nous connectons technologie et innovation.</p>
+        </div>
+
+        <!-- Slide 2 : Génie logiciel -->
+        <div class="swiper-slide">
+          <span class="badge-ghost mb-3"><i class="fa-solid fa-code fa-2x"></i></span>
+          <h1>Génie logiciel</h1>
+          <p class="lead mb-4">Conception et architecture logicielle robustes pour répondre aux besoins complexes des utilisateurs.</p>
+        </div>
+
+        <!-- Slide 3 : Analyse de données -->
+        <div class="swiper-slide">
+          <span class="badge-ghost mb-3"><i class="fa-solid fa-chart-line fa-2x"></i></span>
+          <h1>Analyse de données</h1>
+          <p class="lead mb-4">Exploitation intelligente des données pour des décisions stratégiques et une vision claire du business.</p>
+        </div>
+
+        <!-- Slide 4 : Conception logicielle -->
+        <div class="swiper-slide">
+          <span class="badge-ghost mb-3"><i class="fa-solid fa-diagram-project fa-2x"></i></span>
+          <h1>Conception logicielle</h1>
+          <p class="lead mb-4">Développement d’applications performantes, modulaires et évolutives pour toutes plateformes.</p>
+        </div>
+
+        <!-- Slide 5 : Ingénierie des besoins -->
+        <div class="swiper-slide">
+          <span class="badge-ghost mb-3"><i class="fa-solid fa-list-check fa-2x"></i></span>
+          <h1>Ingénierie des besoins</h1>
+          <p class="lead mb-4">Collecte et analyse rigoureuse des exigences pour garantir la conformité et la satisfaction client.</p>
+        </div>
+
+        <!-- Slide 6 : Maintenance et support -->
+        <div class="swiper-slide">
+          <span class="badge-ghost mb-3"><i class="fa-solid fa-tools fa-2x"></i></span>
+          <h1>Maintenance et support</h1>
+          <p class="lead mb-4">Assistance continue, corrections rapides et mises à jour pour assurer la stabilité et la performance.</p>
+        </div>
+
+        <!-- Slide 6 : Maintenance et support -->
+        <div class="swiper-slide">
+          <span class="badge-ghost mb-3"><i class="fa-solid fa-tools fa-2x"></i></span>
+          <h1>PH GROUP - Ph-DevAI</h1>
+          <span class="badge-ghost mb-3"><img src="{{ url_for('static', filename='logo.png') }}" class="brand-mark" style="width: 100px; height: 100px;"></span>
+          <p class="lead mb-4">Ph-DevAI est un sous departement du groupe PH.</p>
+        </div>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="mt-4">
+      <a class="btn btn-neon me-3" href="#services" style="color: white;">Nos services</a>
+      <a class="btn btn-neon me-3" href="#contact" style="color: white;">contactez nous !</a>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- SERVICES with parallax bg and Swiper -->
+<section id="services" class="parallax-section">
+  <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=80"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-inner container">
+    <h2 class="section-title text-center mb-3" data-i18n="services_title">Nos Services & Formations</h2>
+    <p class="text-center muted mb-4" data-i18n="services_sub">Du site vitrine simple à l’application intelligente — solutions et formations sur-mesure adaptées à vos besoins.</p>
+
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+
+        <!-- Formation 1: Conception de logiciels -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <div>
+              <div class="service-ico"><i class="fa-solid fa-diagram-project"></i></div>
+              <div class="service-title">Conception de logiciels</div>
+              <p class="service-desc">Élaboration de l'architecture et des spécifications des logiciels pour répondre aux besoins des utilisateurs.</p>
+            </div>
+            <div class="mt-3 text-end"><a class="btn btn-outline-light btn-sm" href="#contact">Souscrire</a></div>
+          </div>
+        </div>
+
+        <!-- Formation 2: Développement -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <div>
+              <div class="service-ico"><i class="fa-solid fa-code"></i></div>
+              <div class="service-title">Développement</div>
+              <p class="service-desc">Programmation et intégration de fonctionnalités dans les applications web, mobiles ou autres plateformes.</p>
+            </div>
+            <div class="mt-3 text-end"><a class="btn btn-outline-light btn-sm" href="#contact">Souscrire</a></div>
+          </div>
+        </div>
+
+        <!-- Formation 3: Tests et validation -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <div>
+              <div class="service-ico"><i class="fa-solid fa-check-double"></i></div>
+              <div class="service-title">Tests et validation</div>
+              <p class="service-desc">Mise en œuvre de méthodes et techniques pour s'assurer que le logiciel fonctionne correctement et répond aux exigences spécifiées.</p>
+            </div>
+            <div class="mt-3 text-end"><a class="btn btn-outline-light btn-sm" href="#contact">Souscrire</a></div>
+          </div>
+        </div>
+
+        <!-- Formation 4: Ingénierie des exigences -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <div>
+              <div class="service-ico"><i class="fa-solid fa-list-check"></i></div>
+              <div class="service-title">Ingénierie des exigences</div>
+              <p class="service-desc">Collecte et analyse des besoins des utilisateurs pour garantir que le produit final est conforme à leurs attentes.</p>
+            </div>
+            <div class="mt-3 text-end"><a class="btn btn-outline-light btn-sm" href="#contact">Souscrire</a></div>
+          </div>
+        </div>
+
+        <!-- Formation 5: Maintenance et support -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <div>
+              <div class="service-ico"><i class="fa-solid fa-wrench"></i></div>
+              <div class="service-title">Maintenance et support</div>
+              <p class="service-desc">Assistance continue pour corriger les bugs, mettre à jour les systèmes et améliorer les fonctionnalités existantes.</p>
+            </div>
+            <div class="mt-3 text-end"><a class="btn btn-outline-light btn-sm" href="#contact">Souscrire</a></div>
+          </div>
+        </div>
+
+        <!-- Formation 6: Outils de développement -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <div>
+              <div class="service-ico"><i class="fa-solid fa-tools"></i></div>
+              <div class="service-title">Outils de développement</div>
+              <p class="service-desc">Utilisation de logiciels et d'environnements de développement intégrés (IDE) pour faciliter le processus de création de logiciels.</p>
+            </div>
+            <div class="mt-3 text-end"><a class="btn btn-outline-light btn-sm" href="#contact">Souscrire</a></div>
+          </div>
+        </div>
+
+        <!-- Formation 7: Automatisation des processus -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <div>
+              <div class="service-ico"><i class="fa-solid fa-robot"></i></div>
+              <div class="service-title">Automatisation des processus</div>
+              <p class="service-desc">Mise en place de serveurs d'automatisation et de pipelines CI/CD pour améliorer l'efficacité du développement.</p>
+            </div>
+            <div class="mt-3 text-end" style="border: 1px solid blue; background-color: blue; color: white;"><a class="btn btn-outline-light btn-sm" href="#contact">Souscrire</a></div>
+          </div>
+        </div>
+
+        <!-- Tu peux conserver les anciens services si nécessaire -->
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- COURSES with parallax -->
+  <section id="courses" class="parallax-section">
+    <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1526378720094-3f3f0f9a4f3b?auto=format&fit=crop&w=1920&q=80"></div>
+    <div class="parallax-overlay"></div>
+    <div class="parallax-inner container">
+      <h2 class="section-title text-center mb-3" data-i18n="courses_title">Formations</h2>
+      <p class="text-center muted mb-5" data-i18n="courses_sub">Des parcours intensifs et boostés par l'IA — adaptés aux débutants comme aux pros.</p>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="course-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 data-i18n="course_dev_title">Développement Web</h5>
+              <span class="badge-ghost">2 mois</span>
+            </div>
+            <p class="muted mt-2" data-i18n="course_dev_desc">Objectifs : HTML/CSS/JS, backend Flask, déploiement, bases de données et intégration IA. Public : débutants motivés & développeurs junior.
+            </p>
+            <hr>
+            <p><strong>Prix : Inscription <span style="color: gold;">5 000 FCFA</span></strong> <br><strong>Prix : Formation <span style="color: gold;">100 000 FCFA</span></strong></p>
+            <div class="text-end"><a class="btn btn-sm btn-outline-light" href="#contact">S'inscrire</a></div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="course-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 data-i18n="course_chat_title">Chatbots</h5>
+              <span class="badge-ghost">5 jours</span>
+            </div>
+            <p class="muted mt-2" data-i18n="course_chat_desc">Objectifs : création de chatbots conversationnels, intégration WhatsApp & web, gestion de scénarios. Public : devs ayant des bases en programmation.</p>
+            <hr>
+            <p><strong>Prix : Inscription <span style="color: gold;">5 000 FCFA</span></strong> <br><strong>Prix : Formation <span style="color: gold;">30 000 FCFA</span></strong></p>
+            <div class="text-end"><a class="btn btn-sm btn-outline-light" href="#contact">S'inscrire</a></div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="course-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 data-i18n="course_ia_title">IA & Automatisation</h5>
+              <span class="badge-ghost">4 jours</span>
+            </div>
+            <p class="muted mt-2" data-i18n="course_ia_desc">Objectifs : automatiser processus, workflows, introduction aux modèles et intégrations. Public : managers, devs et CTO souhaitant automatiser tâches métiers.</p>
+            <hr>
+            <p><strong>Prix : Inscription <span style="color: gold;">5 000 FCFA</span></strong> <br><strong>Prix : Formation <span style="color: gold;">30 000 FCFA</span></strong></p>
+            <div class="text-end"><a class="btn btn-sm btn-outline-light" href="#contact">S'inscrire</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOMAINS PH -->
+  <section id="domains" class="parallax-section">
+    <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80"></div>
+    <div class="parallax-overlay"></div>
+    <div class="parallax-inner container">
+      <h2 class="section-title text-center mb-3" data-i18n="domains_title">Autres domaines PH</h2>
+      <p class="text-center muted mb-5" data-i18n="domains_sub">Le groupe PH regroupe plusieurs initiatives complémentaires pour couvrir l'écosystème digital.</p>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="card-dark p-3">
+            <h5>Ph-Academy</h5>
+            <p class="muted">Plateforme éducative et services de répétition en ligne ou à domicile pour le Cameroun, Canada (Montréal) et France.<br><a href="#" style="color: rgb(100, 232, 100); text-decoration: none;"><strong>click here !</strong></a></p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card-dark p-3">
+            <h5>Ph-EchoLang</h5>
+            <p class="muted">Services de traduction boostés par l'IA avec des traducteurs natifs et un workflow qualité.<br><a href="https://ph-echolang.onrender.com" style="color: rgb(100, 232, 100); text-decoration: none;"><strong>click here !</strong></a></p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card-dark p-3">
+            <h5>Ph-ComMan</h5>
+            <p class="muted">Community management et stratégies marketing digital à l'échelle locale et internationale.<br><a href="#" style="color: rgb(100, 232, 100); text-decoration: none;"><strong>click here !</strong></a></p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card-dark p-3">
+            <h5>Ph-reseauNet</h5>
+            <p class="muted">services de reseaux et telecommunications a l'echelle locale.<br><strong style="color: red; cursor: not-allowed;">Unavailable yet!</strong></p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card-dark p-3">
+            <h5>Ph-Art</h5>
+            <p class="muted">services d'art, chant, danse, ecriture, theatre ... <br><strong style="color: red; cursor: not-allowed;">Unavailable yet!</strong></p>
+          </div>
+        </div>
+          <div class="col-md-6 col-lg-4">
+          <div class="card-dark p-3">
+            <h5>Ph-Health</h5>
+            <p class="muted">services medicaux famille, entreprise et personnel venez prendre un abonnement et beneficiez des soins personnalise par nos medecins... <br><strong style="color: red; cursor: not-allowed;">Unavailable yet!</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ <section class="results-section">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-4 fw-bold">Nos Résultats Impressionnants</h2>
+                    <p class="lead">Des chiffres qui parlent d'eux-mêmes</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="result-card">
+                        <div class="result-number">210</div>
+                        <div class="result-label">Personnes ayant demandé<br>nos services</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="result-card">
+                        <div class="result-number">209</div>
+                        <div class="result-label">Personnes<br>satisfaites</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="result-card">
+                        <div class="result-number percentage">70%</div>
+                        <div class="result-label">Recommandation<br>par nos clients</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="result-card">
+                        <div class="result-number percentage">93%</div>
+                        <div class="result-label">Qualité et design<br>selon les clients</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="ai-message">
+                        <p>"Analyse effectuée par notre système d'intelligence artificielle sur les retours clients des 12 derniers mois. Données vérifiées et certifiées."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="parallax-section">
+    <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1526378720094-3f3f0f9a4f3b?auto=format&fit=crop&w=1920&q=80"></div>
+    <div class="parallax-overlay"></div>
+    <div class="parallax-inner container">
+      <h2 class="section-title text-center mb-3" data-i18n="testimonials_title">Témoignages</h2>
+      <p class="text-center muted mb-4">Ils nous ont fait confiance — retour d'expérience réel.</p>
+
+      <div class="swiper testimonialsSwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="testimonial">
+              <p>Le travail de Ph-DevAI a transformé notre MVP en produit commercialisable. Professionnalisme et rapidité.</p>
+              <div class="author mt-3"><div class="avatar">MD</div><div><strong>Marie D.</strong><div class="muted">Directrice Produit</div></div></div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial">
+              <p>La formation en développement nous a permis de monter en compétences rapidement et d'intégrer l'IA dans nos projets.</p>
+              <div class="author mt-3"><div class="avatar">TK</div><div><strong>Thomas K.</strong><div class="muted">CTO</div></div></div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial">
+              <p>Excellent support et mise en place d'un chatbot qui réduit le temps de réponse client de 60%.</p>
+              <div class="author mt-3"><div class="avatar">SM</div><div><strong>Sophie M.</strong><div class="muted">Responsable Support</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="parallax-section">
+    <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80"></div>
+    <div class="parallax-overlay"></div>
+    <div class="parallax-inner container">
+      <h2 class="section-title text-center mb-3" data-i18n="contact_title">Contact</h2>
+      <p class="text-center muted mb-4" data-i18n="contact_sub">Parlez-nous de votre projet — nous répondrons rapidement.</p>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <form   
+          action="https://formspree.io/f/mrboydpp"
+          method="POST" 
+          class="card-dark p-4" 
+          id="contactForm">
+            <div class="row g-3">
+              <div class="col-md-6"><input class="form-control" type="text" id="name"  name="name" placeholder="Nom" required></div>
+              <div class="col-md-6"><input class="form-control" type="email" id="email" name="email" placeholder="Email" required></div>
+              <div class="col-12"><input class="form-control" id="subject" name="subject" placeholder="Sujet"></div>
+              <div class="col-12"><textarea class="form-control" id="message" rows="5" name="message" placeholder="Message"></textarea></div>
+              <div class="col-12 text-end"><button class="btn btn-neon" type="submit" data-i18n="contact_send">Envoyer</button></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+   <!-- Sticky Contact Buttons -->
+    <div class="sticky-contact">
+        <a href="https://wa.me/656531102" class="contact-btn whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://facebook.com/kapseu.ph" class="contact-btn facebook-btn" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/prince_hilquia" class="contact-btn instagram-btn" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+
+  <footer class="footer" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h3 class="footer-title" id="footer-title">Ph-DevAI</h3>
+                    <p id="footer-desc">Entreprise camerounaise spécialisée dans le developpement Wen et d'IA. Membre du groupe PH.</p>
+                    <div class="mt-3">
+                        <a href="https://facebook.com/kapseu.ph" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://instagram.com/prince_hilquia" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 mb-4 mb-lg-0">
+                    <h3 class="footer-title" id="footer-nav-title">Navigation</h3>
+                    <a href="#home" class="footer-link" id="footer-nav-home">Accueil</a>
+                    <a href="#world" class="footer-link" id="footer-nav-languages">Langues</a>
+                    <a href="#services" class="footer-link" id="footer-nav-services">Services</a>
+                    <a href="#testimonials" class="footer-link" id="footer-nav-testimonials">Témoignages</a>
+                    <a href="#domains" class="footer-link" id="footer-nav-domains">Domaines</a>
+                </div>
+                <div class="col-lg-3 mb-4 mb-lg-0">
+                    <h3 class="footer-title" id="footer-contact-title">Contact</h3>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Yaoundé, Cameroun</p>
+                    <p><i class="fas fa-phone me-2"></i> +237 656 531 102</p>
+                    <p><i class="fas fa-envelope me-2"></i> princehilquia79@gmail.com</p>
+                </div>
+                <div class="col-lg-3">
+                    <h3 class="footer-title" id="footer-newsletter-title">Newsletter</h3>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Votre email">
+                        <button class="btn btn-light" type="button" id="newsletter-btn">S'abonner</button>
+                    </div>
+                    <p id="newsletter-text">Restez informé de nos nouveautés et offres spéciales.</p>
+                </div>
+            </div>
+            <p class="mb-5 muted text-center" style="color: gold;">la satisfaction de nos clients est le reflet de notre intelligence</p>
+            <center><img src="{{ url_for('static', filename='logo.png') }}" alt="logo-Ph-DevAI" style="width: 200px; height: 200px;">
+            <div class="copyright">
+                <p id="copyright-text">&copy; 2025 Ph-DevAI - Tous droits réservés. Membre du groupe PH.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+<script>
+  const heroSwiper = new Swiper('.heroSwiper', {
+    direction: 'vertical',
+    loop: true,
+    autoplay: {
+      delay: 5000, // 5 secondes par slide
+      disableOnInteraction: false,
+    },
+    speed: 900,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+</script>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Balises Open Graph (Facebook, Instagram, WhatsApp) -->
+  <meta property="og:title" content="Prince Hilquia Kapseu - Createur de l'entreprise KN-PH et des domaines KN et PH, Createur de Ph-DevAI, Innovateur en Robotique & Développement Web, etudiant en physique et entrepreneur">
+  <meta property="og:description" content="Découvrez mes projets, mes idées et ma vision : unir technologie et humanité à travers la robotique et le développement web.">
+  <meta property="og:image" content=""> <!-- Mets ici l'URL complète d'une image -->
+  <meta property="og:url" content="https://ph-devai.onrender.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <title>Connexion - Ph-DevAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+
+    
+</head>
+<body>
+    <!-- Navbar transparente -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="nav-back">← Retour</a>
+            <a href="{{ url_for('home') }}" class="brand">Ph-DevAI</a>
+        </div>
+    </nav>
+
+    <!-- Page login -->
+    <main class="login-page">
+        <div class="login-container">
+            <h1>Connexion</h1>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="flash-message">
+                  {% for message in messages %}
+                    <p>{{ message }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('login') }}">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" placeholder="Entrez votre nom" required>
+
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+
+                <button type="submit" class="btn-login">Se connecter</button>
+            </form>
+
+            <p class="register-link">Pas encore de compte ? <a href="{{ url_for('register') }}">Inscrivez-vous</a></p>
+        </div>
+    </main>
+
+      <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('form');
+      const username = document.getElementById('username');
+      const password = document.getElementById('password');
+
+      // Création du bouton pour afficher le mot de passe
+      const toggleBtn = document.createElement('span');
+      toggleBtn.textContent = '👁️';
+      toggleBtn.style.cursor = 'pointer';
+      toggleBtn.style.position = 'absolute';
+      toggleBtn.style.right = '15px';
+      toggleBtn.style.top = '38px';
+      toggleBtn.style.color = '#00ffff';
+      toggleBtn.style.userSelect = 'none';
+      password.parentNode.style.position = 'relative';
+      password.parentNode.appendChild(toggleBtn);
+
+      toggleBtn.addEventListener('click', () => {
+        password.type = password.type === 'password' ? 'text' : 'password';
+      });
+
+      // Validation du formulaire
+      form.addEventListener('submit', (e) => {
+        const passRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+        let valid = true;
+        let message = '';
+
+        if (username.value.trim() === '') {
+          valid = false;
+          message = "Le nom d'utilisateur est requis.";
+        } else if (!passRegex.test(password.value)) {
+          valid = false;
+          message = "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.";
+        }
+
+        if (!valid) {
+          e.preventDefault();
+          const container = document.querySelector('.login-container');
+          container.classList.add('shake');
+          setTimeout(() => container.classList.remove('shake'), 400);
+
+          let flash = document.querySelector('.flash-message');
+          if (!flash) {
+            flash = document.createElement('div');
+            flash.className = 'flash-message';
+            document.querySelector('.login-container').prepend(flash);
+          }
+          flash.innerHTML = `<p>${message}</p>`;
+        }
+      });
+    });
+</script>
+</body>
+</html>

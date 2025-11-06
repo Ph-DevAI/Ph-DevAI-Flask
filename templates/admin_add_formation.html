@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+   <!-- Balises Open Graph (Facebook, Instagram, WhatsApp) -->
+  <meta property="og:title" content="Prince Hilquia Kapseu - Createur de l'entreprise KN-PH et des domaines KN et PH, Createur de Ph-DevAI, Innovateur en Robotique & Développement Web, etudiant en physique et entrepreneur">
+  <meta property="og:description" content="Découvrez mes projets, mes idées et ma vision : unir technologie et humanité à travers la robotique et le développement web.">
+  <meta property="og:image" content=""> <!-- Mets ici l'URL complète d'une image -->
+  <meta property="og:url" content="https://ph-devai.onrender.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+  <title>Ajouter une formation — Ph-DevAI Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin_add_formation_v2.css') }}">
+  <script src="https://kit.fontawesome.com/a2e0a2d2b6.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- 🌐 Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Ph<span>DevAI</span></h2>
+    </div>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('admin') }}"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+      <li><a href="{{ url_for('add_formation') }}" class="active"><i class="fa-solid fa-plus-circle"></i> Nouvelle Formation</a></li>
+      <li><a href="{{ url_for('admin') }}#formations"><i class="fa-solid fa-graduation-cap"></i> Formations</a></li>
+      <li><a href="{{ url_for('admin') }}#projects"><i class="fa-solid fa-diagram-project"></i> Projets</a></li>
+      <li><a href="{{ url_for('admin') }}#users"><i class="fa-solid fa-users"></i> Utilisateurs</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <p class="text-white small mb-1">👋 Bonjour, {{ current_user.username }}</p>
+      <a href="{{ url_for('logout') }}" class="btn btn-sm btn-outline-light w-100"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
+    </div>
+  </aside>
+
+  <!-- 🌈 Main Section -->
+  <main class="main-content">
+    <header class="hero text-center text-white py-5">
+      <h1>Créer une nouvelle formation</h1>
+      <p class="lead">Partage ton savoir avec le monde — inspire, forme et impacte.</p>
+    </header>
+
+    <div class="form-card mx-auto shadow-lg p-5 rounded-4 bg-white">
+      <h3 class="text-center mb-4 fw-bold text-primary">Nouvelle Formation</h3>
+
+      <form method="POST" action="{{ url_for('add_formation') }}">
+        <div class="mb-3">
+          <label class="form-label">Titre</label>
+          <input name="title" class="form-control" placeholder="Ex : Développement Web Flask" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea name="description" rows="5" class="form-control" placeholder="Une formation pratique et complète..." required></textarea>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Prix (€)</label>
+            <input name="price" type="number" step="0.01" class="form-control" placeholder="Ex : 99.00" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Durée</label>
+            <input name="duration" class="form-control" placeholder="Ex : 4 semaines" required>
+          </div>
+        </div>
+        <div class="text-center mt-5">
+          <button type="submit" class="btn-gradient btn-lg"><i class="fa-solid fa-plus"></i> Créer la formation</button>
+          <a href="{{ url_for('admin') }}" class="btn-outline ms-2"><i class="fa-solid fa-arrow-left"></i> Retour</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+</body>
+</html>

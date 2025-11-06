@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Balises Open Graph (Facebook, Instagram, WhatsApp) -->
+  <meta property="og:title" content="Prince Hilquia Kapseu - Createur de l'entreprise KN-PH et des domaines KN et PH, Createur de Ph-DevAI, Innovateur en Robotique & Développement Web, etudiant en physique et entrepreneur">
+  <meta property="og:description" content="Découvrez mes projets, mes idées et ma vision : unir technologie et humanité à travers la robotique et le développement web.">
+  <meta property="og:image" content=""> <!-- Mets ici l'URL complète d'une image -->
+  <meta property="og:url" content="https://ph-devai.onrender.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <title>Admin Dashboard - Ph-DevAI</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="d-flex">
+    <nav id="sidebar" class="bg-light p-3 shadow-sm flex-shrink-0">
+        <h4 class="text-primary mb-4"><i class="fa-solid fa-user-shield me-2"></i>Admin - Ph-DevAI</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#statsSection" class="nav-link"><i class="fa-solid fa-chart-line me-2"></i>Stats</a></li>
+            <li class="nav-item mb-2"><a href="#usersSection" class="nav-link"><i class="fa-solid fa-users me-2"></i>Utilisateurs</a></li>
+            <li class="nav-item mb-2"><a href="#projectsSection" class="nav-link"><i class="fa-solid fa-diagram-project me-2"></i>Projets</a></li>
+            <li class="nav-item mb-2"><a href="#formationsSection" class="nav-link"><i class="fa-solid fa-graduation-cap me-2"></i>Formations</a></li>
+            <li class="nav-item mt-4"><a href="{{ url_for('home') }}" class="nav-link text-success"><i class="fa-solid fa-house me-2"></i>Accueil</a></li>
+            <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i>Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <div class="flex-grow-1 p-4">
+        <!-- Stats -->
+        <section id="statsSection" class="mb-4">
+            <div class="d-flex gap-3">
+                <div class="stat-card bg-primary text-white">
+                    <h4><i class="fa-solid fa-users"></i> Utilisateurs</h4>
+                    <p>{{ users|length }}</p>
+                </div>
+                <div class="stat-card bg-info text-white">
+                    <h4><i class="fa-solid fa-diagram-project"></i> Projets</h4>
+                    <p>{{ projets|length }}</p>
+                </div>
+                <div class="stat-card bg-success text-white">
+                    <h4><i class="fa-solid fa-graduation-cap"></i> Formations</h4>
+                    <p>{{ formations|length }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section id="usersSection" class="mb-5">
+            <h3 class="mb-3"><i class="fa-solid fa-users me-2"></i>Utilisateurs</h3>
+            <button class="btn btn-outline-primary mb-2" onclick="exportTableToPDF('usersTable', 'Utilisateurs')">
+                <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
+            </button>
+            <table id="usersTable" class="table table-striped table-hover shadow-sm">
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Dernière connexion</th>
+                        <th>Admin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    <tr>
+                        <td>{{ u.id }}</td>
+                        <td>{{ u.username }}</td>
+                        <td>{{ u.last_login or 'Jamais' }}</td>
+                        <td>{{ 'Oui' if u.is_admin else 'Non' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projectsSection" class="mb-5">
+            <h3 class="mb-3"><i class="fa-solid fa-diagram-project me-2"></i>Projets</h3>
+            <button class="btn btn-outline-info mb-2" onclick="exportTableToPDF('projectsTable', 'Projets')">
+                <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
+            </button>
+            <table id="projectsTable" class="table table-striped table-hover shadow-sm">
+                <thead class="table-info">
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Utilisateur</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in projets %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td>{{ p.title }}</td>
+                        <td>{{ p.owner.username }}</td>
+                        <td>{{ p.status }}</td>
+                        <td>{{ p.description }}</td>
+                        <td>{% if p.image %}<img src="{{ url_for('static', filename='uploads/' + p.image) }}" width="60">{% endif %}</td>
+                        <td>
+                            <a href="{{ url_for('admin_update_project', projet_id=p.id) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Formations Section -->
+        <section id="formationsSection" class="mb-5">
+            <h3 class="mb-3"><i class="fa-solid fa-graduation-cap me-2"></i>Formations</h3>
+            <a href="{{ url_for('add_formation') }}" class="btn btn-success mb-2"><i class="fa-solid fa-plus me-1"></i> Ajouter une formation</a>
+            <button class="btn btn-outline-success mb-2" onclick="exportTableToPDF('formationsTable', 'Formations')">
+                <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
+            </button>
+            <table id="formationsTable" class="table table-striped table-hover shadow-sm">
+                <thead class="table-success">
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Prix</th>
+                        <th>Durée</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in formations %}
+                    <tr>
+                        <td>{{ f.id }}</td>
+                        <td>{{ f.title }}</td>
+                        <td>{{ f.description }}</td>
+                        <td>{{ f.price }} €</td>
+                        <td>{{ f.duration }}</td>
+                        <td>
+                            <a href="{{ url_for('update_formation', formation_id=f.id) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
+                            <form action="{{ url_for('delete_formation', formation_id=f.id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+</div>
+
+<!-- JS Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+function exportTableToPDF(tableId, filename) {
+    const doc = new jsPDF();
+    const table = document.getElementById(tableId);
+    const rows = Array.from(table.querySelectorAll('tr'));
+    
+    doc.setFontSize(18);
+    doc.text(filename, 105, 15, { align: 'center' });
+    doc.setFontSize(12);
+
+    let startY = 25;
+    rows.forEach(row => {
+        const cells = Array.from(row.querySelectorAll('th, td'));
+        let rowText = cells.map(cell => cell.innerText).join(" | ");
+        doc.text(rowText, 10, startY);
+        startY += 7;
+    });
+
+    doc.save(filename + ".pdf");
+}
+</script>
+</body>
+</html>

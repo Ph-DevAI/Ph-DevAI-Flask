@@ -1,0 +1,201 @@
+/* Reset basique */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?fit=crop&w=1400&q=80') no-repeat center center/cover;
+}
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px; /* espace navbar */
+    position: relative;
+}
+
+
+a {
+    text-decoration: none;
+}
+/* Navbar transparente et fixe */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    color: #00ffff;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.brand:hover {
+    color: #1e90ff;
+}
+
+.nav-back {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-back:hover {
+    color: #1e90ff;
+}
+
+.shake {
+  animation: shakeAnim 0.3s ease-in-out;
+}
+
+@keyframes shakeAnim {
+  0%, 100% { transform: translateX(0); }   /* départ et fin → pas de déplacement */
+  25% { transform: translateX(-8px); }     /* décalage vers la gauche */
+  50% { transform: translateX(8px); }      /* décalage vers la droite */
+  75% { transform: translateX(-8px); }     /* encore gauche */
+}
+
+/* Overlay sombre */
+.login-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    z-index: 0;
+}
+
+/* Formulaire futuriste */
+.login-container {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    color: #00ffff;
+    box-shadow: 0 0 20px rgba(0,255,255,0.4), 0 0 40px rgba(0,0,255,0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Titres et labels */
+.login-container h1 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #1e90ff;
+}
+
+.login-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.3rem;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+/* Inputs futuristes */
+.login-container input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #00ffff;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    background: rgba(0,0,0,0.4);
+    color: #00ffff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.login-container input::placeholder {
+    color: rgba(0,255,255,0.6);
+}
+
+.login-container input:focus {
+    outline: none;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 15px #00ffff, 0 0 30px #1e90ff;
+    transform: scale(1.02);
+}
+
+/* Bouton futuriste dégradé */
+.btn-login {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #00ffff, #1e90ff);
+    color: black;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,255,255,0.4);
+}
+
+.btn-login:hover {
+    background: linear-gradient(45deg, #1e90ff, #00ffff);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(0,255,255,0.6);
+}
+
+.btn-login:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 10px rgba(0,255,255,0.3);
+}
+
+/* Flash messages */
+.flash-message {
+    background: rgba(255, 0, 0, 0.3);
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Lien inscription */
+.register-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.register-link a {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #1e90ff;
+}
+
+/* Animation fade in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

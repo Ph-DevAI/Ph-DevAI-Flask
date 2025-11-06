@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Balises Open Graph (Facebook, Instagram, WhatsApp) -->
+  <meta property="og:title" content="Prince Hilquia Kapseu - Createur de l'entreprise KN-PH et des domaines KN et PH, Createur de Ph-DevAI, Innovateur en Robotique & Développement Web, etudiant en physique et entrepreneur">
+  <meta property="og:description" content="Découvrez mes projets, mes idées et ma vision : unir technologie et humanité à travers la robotique et le développement web.">
+  <meta property="og:image" content=""> <!-- Mets ici l'URL complète d'une image -->
+  <meta property="og:url" content="https://ph-devai.onrender.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <title>Dashboard - Ph-DevAI</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+<div class="d-flex">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="bg-light p-3 shadow-sm flex-shrink-0" style="width: 250px;">
+        <h4 class="text-primary mb-4"><i class="fa-solid fa-user me-2"></i>{{ user.username }}</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link" data-section="formationsSection"><i class="fa-solid fa-graduation-cap me-2"></i>Formations</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link" data-section="createProjectSection"><i class="fa-solid fa-lightbulb me-2"></i>Créer un projet</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link" data-section="myProjectsSection"><i class="fa-solid fa-diagram-project me-2"></i>Mes projets</a></li>
+            <li class="nav-item mt-4"><a href="{{ url_for('logout') }}" class="nav-link text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i>Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Espace principal -->
+    <div class="flex-grow-1 p-4" id="mainContent">
+        <!-- Formations (statique) -->
+        <div id="formationsSection">
+            <h3 class="mb-3"><i class="fa-solid fa-graduation-cap me-2"></i>Formations disponibles</h3>
+            <div class="row">
+                {% for f in formations %}
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ f.title }}</h5>
+                            <p class="card-text">{{ f.description|truncate(100) }}</p>
+                            <p class="text-muted">Prix: {{ f.price }} € | Durée: {{ f.duration }}</p>
+                            <!-- Formulaire statique -->
+                            <form>
+                                <div class="mb-2">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" placeholder="{{ user.username }}@example.com">
+                                </div>
+                                <div class="mb-2">
+                                    <label>Message</label>
+                                    <textarea class="form-control" placeholder="Votre message (optionnel)"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-success"><i class="fa-solid fa-check me-1"></i>S'inscrire</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Créer un projet -->
+        <div id="createProjectSection" class="d-none">
+            <h3 class="mb-3"><i class="fa-solid fa-lightbulb me-2"></i>Créer un projet</h3>
+            <form action="{{ url_for('add_project') }}" method="POST" enctype="multipart/form-data" class="shadow-sm p-3 bg-white rounded">
+                <div class="mb-3">
+                    <label>Titre du projet</label>
+                    <input type="text" class="form-control" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label>Statut</label>
+                    <select class="form-select" name="status" required>
+                        <option value="" disabled selected>Sélectionner un statut</option>
+                        <option>En cours</option>
+                        <option>Terminé</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Description</label>
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label>Image (optionnel)</label>
+                    <input type="file" class="form-control" name="image">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus me-1"></i>Créer le projet</button>
+            </form>
+        </div>
+
+        <!-- Mes projets -->
+        <div id="myProjectsSection" class="d-none">
+            <h3 class="mb-3"><i class="fa-solid fa-diagram-project me-2"></i>Mes projets</h3>
+            <div class="row">
+                {% for p in projets %}
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ p.title }}</h5>
+                            <p class="card-text">{{ p.description|truncate(100) }}</p>
+                            <p class="text-muted">Statut: {{ p.status }}</p>
+                            {% if p.image %}
+                            <img src="{{ url_for('static', filename='uploads/' + p.image) }}" class="img-fluid rounded">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JS pour changer les sections -->
+<script>
+const links = document.querySelectorAll('#sidebar .nav-link[data-section]');
+const sections = ['formationsSection', 'createProjectSection', 'myProjectsSection'];
+
+links.forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.getAttribute('data-section');
+        sections.forEach(sec => document.getElementById(sec).classList.add('d-none'));
+        document.getElementById(target).classList.remove('d-none');
+    });
+});
+</script>
+</body>
+</html>

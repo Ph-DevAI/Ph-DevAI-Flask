@@ -1,0 +1,192 @@
+/* ===== Fonts ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f3f7;
+    color: #333;
+    margin: 0;
+}
+
+/* ===== Sidebar ===== */
+#sidebar {
+    width: 260px;
+    min-height: 100vh;
+    position: fixed;
+    background-color: #ffffff;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#sidebar h4 {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+#sidebar .nav-link {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px 15px;
+    transition: all 0.2s ease;
+}
+
+#sidebar .nav-link:hover, 
+#sidebar .nav-link.active {
+    background-color: #e6f2ff;
+    color: #007bff;
+}
+
+/* ===== Main content ===== */
+#mainContent {
+    margin-left: 260px;
+    padding: 30px;
+}
+
+/* ===== Cards style ===== */
+.card {
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* ===== Stat cards ===== */
+.stat-card {
+    flex: 1;
+    padding: 25px;
+    border-radius: 15px;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Couleurs pastel */
+.bg-primary { background-color: #6c9eff !important; } /* bleu doux */
+.bg-info { background-color: #70d6ff !important; }    /* bleu ciel */
+.bg-success { background-color: #7bed9f !important; } /* vert doux */
+.bg-warning { background-color: #ffd6a5 !important; } /* corail clair */
+.bg-danger { background-color: #ff7b7b !important; }  /* rouge pastel */
+
+/* ===== Headings ===== */
+h3 {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #6c9eff;
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #5588e0;
+}
+
+.btn-success {
+    background-color: #7bed9f;
+    border: none;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #59c77c;
+}
+
+.btn-warning {
+    background-color: #ffd6a5;
+    border: none;
+    color: #333;
+}
+
+.btn-warning:hover {
+    background-color: #ffc07a;
+}
+
+/* ===== Forms ===== */
+form {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+input.form-control, select.form-select, textarea.form-control {
+    border-radius: 10px;
+    border: 1px solid #d0d0d0;
+    padding: 10px;
+    transition: all 0.2s ease;
+}
+
+input.form-control:focus, select.form-select:focus, textarea.form-control:focus {
+    border-color: #6c9eff;
+    box-shadow: 0 0 5px rgba(108,158,255,0.3);
+}
+
+/* ===== Tables ===== */
+table {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+table thead {
+    background-color: #6c9eff;
+    color: white;
+}
+
+table tbody tr:hover {
+    background-color: #f1f7ff;
+}
+
+/* ===== Images ===== */
+img {
+    border-radius: 10px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    #mainContent {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .stat-card {
+        margin-bottom: 15px;
+    }
+}
